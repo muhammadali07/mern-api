@@ -1,26 +1,134 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "Absensi API",
-      "version": "1.0.0"
-    },
-    "paths": {
-      "/api/attendance/report": {
-        "get": {
-          "summary": "Get attendance report",
-          "parameters": [{
-            "name": "query",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }],
-          "responses": {
-            "200": {
-              "description": "Successful response"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Absensi API",
+    "description": "Dokumentasi API untuk sistem absensi",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login User",
+        "description": "Mengautentikasi user dengan email dan password.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
             }
           }
+        },
+        "responses": {
+          "200": { "description": "Login berhasil", "content": { "application/json": {} } },
+          "401": { "description": "Email atau password salah" }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register User",
+        "description": "Mendaftarkan user baru.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User berhasil didaftarkan" },
+          "400": { "description": "Data tidak valid atau email sudah digunakan" }
+        }
+      }
+    },
+    "/attendance/clock-in": {
+      "post": {
+        "summary": "Clock In",
+        "description": "Merekam waktu clock-in user.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Clock-in berhasil", "content": { "application/json": {} } },
+          "400": { "description": "User sudah clock-in hari ini" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/attendance/clock-out": {
+      "post": {
+        "summary": "Clock Out",
+        "description": "Merekam waktu clock-out user.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Clock-out berhasil", "content": { "application/json": {} } },
+          "400": { "description": "User belum clock-in hari ini" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/attendance/report": {
+      "get": {
+        "summary": "Lihat Laporan Absensi",
+        "description": "Mengambil laporan absensi berdasarkan filter.",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Tanggal mulai (YYYY-MM-DD)",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Tanggal akhir (YYYY-MM-DD)",
+            "required": false,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "ID user untuk filter (opsional)",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Berhasil mendapatkan laporan absensi", "content": { "application/json": {} } },
+          "401": { "description": "Unauthorized" }
         }
       }
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
-  
+}
