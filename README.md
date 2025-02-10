@@ -31,7 +31,7 @@ cd absensi-api
 ### 2️⃣ **Buat File `.env`**
 Buat file `.env` di root project:
 ```ini
-PORT=5000
+PORT=9000
 JWT_SECRET=your_secret_key
 MYSQL_HOST=mysql
 MYSQL_USER=root
@@ -51,8 +51,8 @@ docker-compose up --build
 > **Pastikan Docker sudah terinstall**
 
 Setelah sukses, service akan berjalan di:
-- **API**: `http://localhost:5000`
-- **Swagger Docs**: `http://localhost:5000/api-docs`
+- **API**: `http://localhost:9000`
+- **Swagger Docs**: `http://localhost:9000/api-docs`
 - **MySQL**: `localhost:3306`
 - **Redis**: `localhost:6379`
 - **Elasticsearch**: `http://localhost:9200`
@@ -83,7 +83,7 @@ npm start
 ---
 
 ## 📌 API Documentation
-- **Swagger UI**: `http://localhost:5000/api-docs`
+- **Swagger UI**: `http://localhost:9000/api-docs`
 - **Postman Collection** tersedia di folder `docs/postman_collection.json`
 
 ---
@@ -109,7 +109,7 @@ npm start
 ### **Port Sudah Digunakan**
 Jika mendapat error "Port already in use":
 ```sh
-kill -9 $(lsof -t -i:5000)
+kill -9 $(lsof -t -i:9000)
 ```
 
 ### **Redis Error: Socket already opened**
