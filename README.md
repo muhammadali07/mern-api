@@ -7,7 +7,7 @@ Sistem API untuk fitur absensi menggunakan **Node.js (Express.js)**, **MySQL**, 
 - **Clock-in & Clock-out**
 - **Laporan Absensi dengan Elasticsearch**
 - **Realtime Redis untuk Clock-in/Clock-out & Reminder**
-- **Swagger & Postman API Documentation**
+- **Swagger
 - **Dockerized Deployment**
 
 ## 🛠️ Teknologi yang Digunakan
@@ -84,7 +84,6 @@ npm start
 
 ## 📌 API Documentation
 - **Swagger UI**: `http://localhost:9000/api-docs`
-- **Postman Collection** tersedia di folder `docs/postman_collection.json`
 
 ---
 
