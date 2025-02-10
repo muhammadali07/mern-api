@@ -34,14 +34,3 @@ exports.getAttendanceReport = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// const getAttendanceReport = async (req, res) => {
-//   try {
-//     // Implementasi logika mendapatkan laporan absensi
-//     res.json({ message: "Laporan absensi berhasil diambil" });
-//   } catch (error) {
-//     res.status(500).json({ error: "Terjadi kesalahan dalam mengambil laporan" });
-//   }
-// };
-
-// module.exports = { getAttendanceReport };

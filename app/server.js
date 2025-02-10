@@ -16,7 +16,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./docs/swagger.json');
 
 app.use(cors());
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // Endpoint Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
@@ -29,14 +29,14 @@ sequelize.sync()
   .then(() => console.log('Database connected'))
   .catch(err => console.error('Database connection error:', err));
 
-(async () => {
-  try {
-    await redisClient.connect();
-    console.log('Redis connected');
-  } catch (err) {
-    console.error('Redis connection error:', err);
+process.on('SIGINT', async () => {
+  if (redisClient.isOpen) {
+    await redisClient.disconnect();
+    console.log("Redis disconnected.");
   }
-})();
+  process.exit(0);
+});
+
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
